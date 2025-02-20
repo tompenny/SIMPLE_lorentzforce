@@ -160,7 +160,7 @@ def load_data_hdf5(filename):
         datakeys = list(f[key].keys())
         datadict = {}
         for datakey in datakeys:
-            dataset = list(f[key][datakey])
+            dataset = np.array(f[key][datakey])
             datadict[datakey] = dataset
         mdict[key] = datadict
     f.close()
@@ -181,7 +181,6 @@ def load_metadata_hdf5(filename):
             attrdict[attrkey] = f[key].attrs[attrkey]
         mdict[key] = attrdict
         datakeys = list(f[key].keys())
-        dattrdict = {}
         for datakey in datakeys:
             attrdict = {}
             attrkeys = list(f[key][datakey].attrs.keys())
