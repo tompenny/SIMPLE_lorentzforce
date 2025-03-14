@@ -308,6 +308,6 @@ def lockin(data, fs, demod_freq, BW_pre, BW, BW2, mode):
         theta = np.unwrap(-2*np.arctan(X_tt_filt[1:]/Y_tt_filt[1:]))/2
         R2_filt = butter_lowpass_filter(R2, BW2, fs, order = 2)
         theta_filt = butter_lowpass_filter(theta, BW2, fs, order = 2)
-        return time, R2, R2_filt, theta_filt
+        return time, R2, theta, R2_filt, theta_filt
     else:
         return 0
