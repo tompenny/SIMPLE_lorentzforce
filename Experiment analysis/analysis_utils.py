@@ -166,6 +166,28 @@ def load_data_hdf5(filename):
     f.close()
     return mdict
 
+def load_data_lf(filename):
+    """
+    Loads data in HDF5 for Lorentz force experiment.
+    Also loads the important metadata of time interval, pressure, adc conversion factor.
+    Outputs as dictions in volts.
+    filename: Filename of file you want to load
+    """
+    f = h5py.File(filename, "r")
+    keys = list(f['data'].keys())
+    mdict = {}
+    adict = {}
+    for key in keys:
+        dataset = np.array(f['data'][key])
+        adc2mV = f['data'][key].attrs['adc2mv']
+        mdict[key] = dataset*adc2mV/1000 # convert to volts
+    akeys = ['delta_t', 'pressure_mbar']
+    for akey in akeys:
+        attr = f['data'].attrs[akey]
+        adict[akey] = attr
+    f.close()
+    return mdict, adict
+
 def load_metadata_hdf5(filename):
     """
     Loads metadata in HDF5. Doesn't load data. Outputs as dictionary.
