@@ -148,6 +148,19 @@ def save_data_hdf5(filename, data):
         for key in keys:
             f[key] = data[key]
 
+def load_data_hdf52(filename):
+    """
+    Loads data in HDF5. Doesn't load metadata. Outputs as dictionary.
+    filename: Filename of file you want to load
+    """
+    f = h5py.File(filename, "r")
+    keys = list(f.keys())
+    mdict = {}
+    for key in keys:
+        mdict[key] = np.array(f[key])
+    f.close()
+    return mdict
+
 def load_data_hdf5(filename):
     """
     Loads data in HDF5. Doesn't load metadata. Outputs as dictionary.
